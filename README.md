@@ -1,8 +1,8 @@
 # ResistUI
 
-It's my own interface addon for classic WoW, inspired by LortiUI and SUI.
+> It's my own interface addon for classic WoW, inspired by LortiUI and SUI.
 
-## Installl
+## Install
 
 - Download from https://github.com/rafaberaldo/ResistUI/archive/refs/heads/master.zip
 - Unzip and place at `AddOns` folder
@@ -10,6 +10,10 @@ It's my own interface addon for classic WoW, inspired by LortiUI and SUI.
 
 There's also a chat settings at `chat-cache.txt`, copy and paste
 at `WTF/Account/<AccNumber>/<Realm>/<Character>` folder
+
+## Example
+
+![](example.png)
 
 ## License
 

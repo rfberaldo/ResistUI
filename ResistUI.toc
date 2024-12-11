@@ -1,0 +1,34 @@
+## Interface: 11505
+## Version: 1.0.0
+## Title: ResistUI
+## Notes: Resist's Custom UI
+## Author: Resist
+
+Init.lua
+Utils.lua
+
+Modules/Debug.lua
+Modules/ShamanBlue.lua
+Modules/InfoBar.lua
+Modules/CastingBar.lua
+Modules/TargetHealth.lua
+Modules/UnitFrame.lua
+Modules/UnitFrameHealthColor.lua
+Modules/UnitFrameBarTexture.lua
+Modules/ChatShortChannel.lua
+Modules/ChatUrl.lua
+Modules/Tooltip.lua
+Modules/Buff.lua
+Modules/ActionBar.lua
+Modules/Button.lua
+
+Modules/Recolor/ActionBar.lua
+Modules/Recolor/UnitFrame.lua
+Modules/Recolor/Minimap.lua
+Modules/Recolor/CastingBar.lua
+Modules/Recolor/Chat.lua
+Modules/Recolor/PopUp.lua
+Modules/Recolor/AddonList.lua
+Modules/Recolor/WorldMap.lua
+Modules/Recolor/Talent.lua
+Modules/Recolor/Character.lua

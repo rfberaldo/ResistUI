@@ -43,6 +43,7 @@ function module:OnLoad()
 		MiniMapTrackingBorder,
 		MiniMapMailBorder,
 		MiniMapLFGBorder,
+		LFGMinimapFrameBorder,
 		GameTimeTexture,
 	}) do
 		texture:SetDesaturation(1)
@@ -60,6 +61,10 @@ function module:OnLoad()
 				end
 			end
 		end
+
+		-- LFG button also is not loaded upfront
+		LFGMinimapFrameBorder:SetDesaturation(1)
+		LFGMinimapFrameBorder:SetVertexColor(ResistUI.frameColor.bg:GetRGBA())
 	end
 
 	-- Make sure the buttons are created

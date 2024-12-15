@@ -36,7 +36,7 @@ function module:OnLoad()
 		icon:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -offset, offset)
 
 		local mask = frame:CreateTexture(frameName .. "Mask", "OVERLAY", nil, 7)
-		mask:SetTexture(ResistUI.TexturePath .. "Mask\\Gloss.png")
+		mask:SetTexture(ResistUI.texturePath .. "Mask\\Gloss.png")
 		mask:ClearAllPoints()
 		mask:SetAllPoints(frame)
 
@@ -53,10 +53,10 @@ function module:OnLoad()
 		end
 
 		if frame.duration then
-			frame.duration:SetFont(ResistUI.Font, ResistUI.FontSize, "OUTLINE")
+			frame.duration:SetFont(ResistUI.font, ResistUI.fontSize, "OUTLINE")
 		end
 		if frame.count then
-			frame.count:SetFont(ResistUI.Font, ResistUI.FontSize, "OUTLINE")
+			frame.count:SetFont(ResistUI.font, ResistUI.fontSize, "OUTLINE")
 		end
 
 		frame.ResistUIStyled = true

@@ -75,7 +75,7 @@ function module:OnLoad()
 	end
 
 	local function setupActionBars()
-		local margin = 4
+		local margin = 2
 
 		-- Adjust margin between action buttons
 		for i = 2, NUM_ACTIONBAR_BUTTONS do

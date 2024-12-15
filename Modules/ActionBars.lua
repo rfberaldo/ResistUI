@@ -3,8 +3,8 @@ local _, ResistUI = ...
 local module = ResistUI:NewModule()
 function module:OnLoad()
 	-- Hide gryphons
-	MainMenuBarLeftEndCap:Hide()
-	MainMenuBarRightEndCap:Hide()
+	-- MainMenuBarLeftEndCap:Hide()
+	-- MainMenuBarRightEndCap:Hide()
 
 	-- MainMenuExpBar:Hide()
 	-- MainMenuBarMaxLevelBar:SetAlpha(0) -- hide the xp bar

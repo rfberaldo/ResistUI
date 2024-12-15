@@ -1,6 +1,6 @@
 local _, ResistUI = ...
 
-local color = ResistUI.FrameColorBG
+local color = ResistUI.frameColorBG
 local module = ResistUI:NewModule()
 function module:OnLoad()
 	-- Player

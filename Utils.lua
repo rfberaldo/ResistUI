@@ -60,3 +60,9 @@ function ResistUI:DeepRecolor(frame, except)
 		end
 	end
 end
+
+---@param unit string
+---@return boolean
+function ResistUI:IsMaxLevel(unit)
+	return UnitLevel(unit) == MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]
+end

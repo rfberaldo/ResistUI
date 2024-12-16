@@ -11,6 +11,18 @@
 There's also a chat settings at `chat-cache.txt`, copy and paste
 at `WTF/Account/<AccNumber>/<Realm>/<Character>` folder
 
+## What it changes/adds
+
+- There is no configuration, it's fully opinionated
+- Minimalistic UI
+- Darkened UI (frames, action bars, buffs, debuffs)
+- Bigger health bar
+- Class-colored health bar
+- Elite frames
+- Status bar below the chat with FPS, latency, overall durability, current speed, and XP/h (hover for more details)
+- Blue shamans
+- Chat: short channel names, ability to copy urls
+
 ## Example
 
 ![](example.png)

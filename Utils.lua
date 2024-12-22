@@ -66,3 +66,25 @@ end
 function ResistUI:IsMaxLevel(unit)
 	return UnitLevel(unit) == MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]
 end
+
+---@param secs number
+function ResistUI:FormatTime(secs)
+	if ResistUI:IsInf(secs) then
+		return "..."
+	end
+
+	if secs < 60 then
+		return "<1m"
+	end
+
+	if secs < 3600 then
+		return string.format("%dm", secs / 60)
+	end
+
+	return string.format("%.1fh", secs / 3600)
+end
+
+---@param value number
+function ResistUI:IsInf(value)
+	return value == math.huge or value == -math.huge
+end

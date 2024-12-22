@@ -19,7 +19,7 @@ at `WTF/Account/<AccNumber>/<Realm>/<Character>` folder
 - Bigger health bar
 - Class-colored health bar
 - Elite frames
-- Status bar below the chat with FPS, latency, overall durability, current speed, and XP/h (hover for more details)
+- Status bar with FPS, latency, durability, current speed, and XP/h (hover for more details)
 - Blue shamans
 - Chat: short channel names, ability to copy urls
 

@@ -9,7 +9,8 @@ Utils.lua
 
 Modules/Debug.lua
 Modules/ShamanBlue.lua
-Modules/InfoBar.lua
+Modules/StatusBar.lua
+Modules/Interrupt.lua
 Modules/CastingBar.lua
 Modules/TargetHealth.lua
 Modules/UnitFrame.lua

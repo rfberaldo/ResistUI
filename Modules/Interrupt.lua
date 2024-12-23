@@ -7,7 +7,7 @@ function module:OnLoad()
 	f:SetScript("OnEvent", function()
 		if not IsInGroup() and not IsInRaid() then return end
 
-		local _, event, _, sourceGUID, _, _, _, _, destName, _, _, spellId, spellName, _ = CombatLogGetCurrentEventInfo()
+		local _, event, _, sourceGUID, _, _, _, _, destName = CombatLogGetCurrentEventInfo()
 		if (event ~= "SPELL_INTERRUPT") then return end
 		if (sourceGUID ~= UnitGUID("player")) then return end
 
@@ -16,8 +16,7 @@ function module:OnLoad()
 			chatChannel = "RAID"
 		end
 
-		local spell = C_Spell.GetSpellLink(spellId) or spellName
-		local msg = "Interrupted " .. spell .. " from " .. destName
+		local msg = "Interrupted " .. destName
 
 		SendChatMessage(msg, chatChannel)
 	end)

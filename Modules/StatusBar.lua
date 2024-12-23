@@ -86,33 +86,37 @@ function module:OnLoad()
 	local function setupXpHour()
 		if ResistUI:IsMaxLevel("player") then return end
 
-		local started = time() - 1
+		local started = GetServerTime()
 		local xpGainedTotal = 0
 		local xpPerHour = 0
 		local elapsed = 0
 		local levelIn = 0
 		local restedPercent = 0
-
-		local fxp = CreateFrame("Frame")
-		fxp:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
-		fxp:SetScript("OnEvent", function(_, _, ...)
-			if ResistUI:IsMaxLevel("player") then
-				fxp:UnregisterAllEvents()
-				return
-			end
-			local xpGained = string.match(string.match(..., "%d+ experience"), "%d+")
-			xpGainedTotal = xpGainedTotal + tonumber(xpGained)
-		end)
+		local xpPrevious = UnitXP("player")
+		local xpMax = UnitXPMax("player")
 
 		local function update()
 			if ResistUI:IsMaxLevel("player") then return end
 
-			elapsed = time() - started
+			local xp = UnitXP("player")
+
+			-- Level up
+			if xpPrevious > xp then
+				local missingXp = xpMax - xpPrevious
+				xpGainedTotal = xpGainedTotal + missingXp
+				xpMax = UnitXPMax("player")
+				xpPrevious = 0
+			end
+
+			local xpGained = xp - xpPrevious
+			xpGainedTotal = xpGainedTotal + xpGained
+			xpPrevious = xp
+
+			elapsed = GetServerTime() - started + 1 -- +1 to avoid division by zero
 			local rate = xpGainedTotal / elapsed
-			xpPerHour = math.floor(3600 * rate)
-			levelIn = (UnitXPMax("player") - UnitXP("player")) / rate
-			levelIn = math.max(0, levelIn)
-			restedPercent = (GetXPExhaustion() or 0) / UnitXPMax("player") * 100
+			xpPerHour = rate * 3600
+			levelIn = math.max(0, (xpMax - xp) / rate)
+			restedPercent = (GetXPExhaustion() or 0) / xpMax * 100
 
 			xpHourText:SetText(string.format("|c00ffffff%.1fk|r XP/h", xpPerHour / 1000))
 		end
@@ -136,7 +140,7 @@ function module:OnLoad()
 		xpHourText:SetScript("OnMouseDown", function(self, btn)
 			if btn ~= "LeftButton" then return end
 
-			started = time() - 1
+			started = GetServerTime()
 			xpGainedTotal = 0
 			xpPerHour = 0
 			elapsed = 0
@@ -145,7 +149,7 @@ function module:OnLoad()
 		end)
 
 		update()
-		C_Timer.NewTicker(2, update)
+		C_Timer.NewTicker(1, update)
 	end
 
 	setupFps()

@@ -72,16 +72,14 @@ function module:OnLoad()
 
 	-- Mov. speed
 	local function setupSpeed()
-		local speed = nil
+		local speed = 0
 
 		local function updateSpeed()
-			if speed == GetUnitSpeed("player") then return end
-
-			speed = GetUnitSpeed("player")
-			speedText:SetText(string.format("|c00ffffff%d%%|r speed", speed / 7 * 100))
+			speed = GetUnitSpeed("player") / 7 * 100
+			speedText:SetText(string.format("|c00ffffff%d%%|r speed", speed))
 		end
 
-		C_Timer.NewTicker(0.1, updateSpeed)
+		C_Timer.NewTicker(0.15, updateSpeed)
 	end
 
 	-- XP/h
@@ -122,13 +120,12 @@ function module:OnLoad()
 		xpHourText:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
 			GameTooltip:ClearLines()
-			GameTooltip:AddLine("XP per hour: " .. string.format("%.1fk", xpPerHour / 1000))
-			GameTooltip:AddLine("Total XP gained: " .. xpGainedTotal)
-			GameTooltip:AddLine("Rested: " .. string.format("%d%%", restedPercent))
-			GameTooltip:AddLine("Leveling in: " .. ResistUI:FormatTime(levelIn))
-			GameTooltip:AddLine("Elapsed: " .. ResistUI:FormatTime(elapsed))
-			GameTooltip:AddLine("* Click to reset session")
-
+			GameTooltip:AddLine("XP per hour: " .. string.format("|c00ffffff%.1fk|r", xpPerHour / 1000))
+			GameTooltip:AddLine("Total exp. gained: |c00ffffff" .. xpGainedTotal .. "|r")
+			GameTooltip:AddLine("Rested: " .. string.format("|c00ffffff%d%%|r", restedPercent))
+			GameTooltip:AddLine("Leveling in: |c00ffffff" .. ResistUI:FormatTime(levelIn) .. "|r")
+			GameTooltip:AddLine("Elapsed: |c00ffffff" .. ResistUI:FormatTime(elapsed) .. "|r")
+			GameTooltip:AddLine("(Click to reset session)", 0.6, 0.6, 0.6)
 			GameTooltip:Show()
 		end)
 

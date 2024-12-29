@@ -63,8 +63,10 @@ function module:OnLoad()
 		end
 
 		-- LFG button also is not loaded upfront
-		LFGMinimapFrameBorder:SetDesaturation(1)
-		LFGMinimapFrameBorder:SetVertexColor(ResistUI.frameColor.bg:GetRGBA())
+		if LFGMinimapFrameBorder ~= nil then
+			LFGMinimapFrameBorder:SetDesaturation(1)
+			LFGMinimapFrameBorder:SetVertexColor(ResistUI.frameColor.bg:GetRGBA())
+		end
 	end
 
 	-- Make sure the buttons are created

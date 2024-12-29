@@ -200,6 +200,7 @@ function module:OnLoad()
 	setupActionBars()
 	updateStatusBars()
 	hooksecurefunc("MultiActionBar_Update", setupActionBars)
+	hooksecurefunc("PetActionBar_Update", setupActionBars)
 	hooksecurefunc("MainMenuTrackingBar_Configure", updateStatusBars)
 	MainMenuBar:HookScript("OnShow", setupMicroMenuAndBags)
 end

@@ -95,19 +95,19 @@ function module:OnLoad()
 		local xpPrevious = UnitXP("player")
 		local xpMax = UnitXPMax("player")
 
+		local fLvlup = CreateFrame("Frame")
+		fLvlup:RegisterEvent("PLAYER_LEVEL_UP")
+		fLvlup:SetScript("OnEvent", function()
+			local missingXp = xpMax - xpPrevious
+			xpGainedTotal = xpGainedTotal + missingXp
+			xpMax = UnitXPMax("player")
+			xpPrevious = 0
+		end)
+
 		local function update()
 			if ResistUI:IsMaxLevel("player") then return end
 
 			local xp = UnitXP("player")
-
-			-- Level up
-			if xpPrevious > xp then
-				local missingXp = xpMax - xpPrevious
-				xpGainedTotal = xpGainedTotal + missingXp
-				xpMax = UnitXPMax("player")
-				xpPrevious = 0
-			end
-
 			local xpGained = xp - xpPrevious
 			xpGainedTotal = xpGainedTotal + xpGained
 			xpPrevious = xp
@@ -125,10 +125,20 @@ function module:OnLoad()
 			GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
 			GameTooltip:ClearLines()
 			GameTooltip:AddLine("XP per hour: " .. string.format("|c00ffffff%.1fk|r", xpPerHour / 1000))
-			GameTooltip:AddLine("Total exp. gained: |c00ffffff" .. xpGainedTotal .. "|r")
-			GameTooltip:AddLine("Rested: " .. string.format("|c00ffffff%d%%|r", restedPercent))
-			GameTooltip:AddLine("Leveling in: |c00ffffff" .. ResistUI:FormatTime(levelIn) .. "|r")
-			GameTooltip:AddLine("Elapsed: |c00ffffff" .. ResistUI:FormatTime(elapsed) .. "|r")
+
+			if xpGainedTotal > 0 then
+				GameTooltip:AddLine("Total exp. gained: " .. string.format("|c00ffffff%d|r", xpGainedTotal))
+			end
+
+			if restedPercent >= 1 then
+				GameTooltip:AddLine("Rested: " .. string.format("|c00ffffff%d%%|r", restedPercent))
+			end
+
+			if not ResistUI:IsInf(levelIn) then
+				GameTooltip:AddLine("Leveling in: " .. string.format("|c00ffffff%s|r", ResistUI:FormatTime(levelIn)))
+			end
+
+			GameTooltip:AddLine("Elapsed: " .. string.format("|c00ffffff%s|r", ResistUI:FormatTime(elapsed)))
 			GameTooltip:AddLine("(Click to reset session)", 0.6, 0.6, 0.6)
 			GameTooltip:Show()
 		end)

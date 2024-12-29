@@ -52,9 +52,9 @@ function ResistUI:DeepRecolor(frame, except)
 	for _, child in pairs({ frame:GetChildren() }) do
 		local name = child:GetName() or ""
 		if (child:GetObjectType() ~= "Button" or name:find("Tab")) and
-			child:GetObjectType() ~= "CheckButton" and
-			child:GetObjectType() ~= "Slider" and
-			(not except.frames or not except.frames[child])
+				child:GetObjectType() ~= "CheckButton" and
+				child:GetObjectType() ~= "Slider" and
+				(not except.frames or not except.frames[child])
 		then
 			ResistUI:DeepRecolor(child, except)
 		end
@@ -73,18 +73,29 @@ function ResistUI:FormatTime(secs)
 		return "..."
 	end
 
-	if secs < 60 then
-		return "<1m"
+	if secs > 86400 then
+		return string.format("%dd", ceil(secs / 86400))
 	end
 
-	if secs < 3600 then
-		return string.format("%dm", secs / 60)
+	if secs > 3600 then
+		return string.format("%dh", ceil(secs / 3600))
 	end
 
-	return string.format("%.1fh", secs / 3600)
+	if secs > 90 then
+		return string.format("%dm", ceil(secs / 60))
+	end
+
+	return string.format("%ds", secs)
 end
 
 ---@param value number
 function ResistUI:IsInf(value)
 	return value == math.huge or value == -math.huge
+end
+
+---@param value number
+---@param min number
+---@param max number
+function ResistUI:Clamp(value, min, max)
+	return math.min(max, math.max(min, value))
 end

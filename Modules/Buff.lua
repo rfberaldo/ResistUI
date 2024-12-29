@@ -3,17 +3,8 @@ local _, ResistUI = ...
 local module = ResistUI:NewModule()
 function module:OnLoad()
 	-- Overwriting the global function used to show buff duration
-	function SecondsToTimeAbbrev(seconds)
-		if seconds > 86400 then
-			return format("%dd", ceil(seconds / 86400))
-		end
-		if seconds > 3600 then
-			return format("%dh", ceil(seconds / 3600))
-		end
-		if seconds > 90 then
-			return format("%dm", ceil(seconds / 60))
-		end
-		return format("%ds", seconds)
+	function SecondsToTimeAbbrev(secs)
+		return ResistUI:FormatTime(secs)
 	end
 
 	---@param frame Frame

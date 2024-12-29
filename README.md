@@ -15,13 +15,16 @@ at `WTF/Account/<AccNumber>/<Realm>/<Character>` folder
 
 - There is no configuration, it's fully opinionated
 - Minimalistic UI
-- Darkened UI (frames, action bars, buffs, debuffs)
+- Darkened frames, action bars, buffs, debuffs
 - Bigger health bar
 - Class-colored health bar
 - Elite frames
 - Status bar with FPS, latency, durability, current speed, and XP/h (hover for more details)
 - Blue shamans
-- Chat: short channel names, ability to copy urls
+- Chat's short channel names, ability to copy urls
+- Announce on interrupt
+- Announce on important skills miss
+- Energy tick for rogues
 
 ## Example
 

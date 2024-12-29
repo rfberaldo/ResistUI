@@ -10,7 +10,8 @@ Utils.lua
 Modules/Debug.lua
 Modules/ShamanBlue.lua
 Modules/StatusBar.lua
-Modules/Interrupt.lua
+Modules/AnnounceInterrupt.lua
+Modules/AnnounceMiss.lua
 Modules/CastingBar.lua
 Modules/TargetHealth.lua
 Modules/UnitFrame.lua
@@ -22,6 +23,7 @@ Modules/Tooltip.lua
 Modules/Buff.lua
 Modules/ActionBar.lua
 Modules/Button.lua
+Modules/EnergyTick.lua
 
 Modules/Recolor/ActionBar.lua
 Modules/Recolor/UnitFrame.lua

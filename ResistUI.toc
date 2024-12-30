@@ -1,5 +1,5 @@
 ## Interface: 11505
-## Version: @project-version@
+## Version: 1.0.0
 ## Title: ResistUI
 ## Notes: Resist's Custom UI
 ## Author: Resist

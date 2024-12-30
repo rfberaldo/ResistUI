@@ -1,0 +1,5 @@
+package-as: ResistUI
+ignore:
+  - README.md
+  - example.png
+	- chat-cache.txt

@@ -17,19 +17,23 @@ function module:OnLoad()
 		if unit ~= "player" then return end
 		if type ~= "ENERGY" then return end
 
+		local ts = GetTime()
+
 		local curr = UnitPower("player")
 		local max = UnitPowerMax("player")
 
 		if last < curr and curr < max then
 			self:Show()
 			self.Spark:Show()
-			expirationTime = GetTime() + INTERVAL
+			expirationTime = ts + INTERVAL
 		end
 		last = curr
 	end
 
 	local function updateHandler(self)
 		if not self:IsShown() then return end
+
+		local ts = GetTime()
 
 		local powerType = UnitPowerType("player")
 		if powerType ~= Enum.PowerType.Energy then
@@ -38,10 +42,14 @@ function module:OnLoad()
 			return
 		end
 
-		local timeLeft = expirationTime - GetTime()
+		local timeLeft = expirationTime - ts
 		if timeLeft <= 0 then
-			expirationTime = GetTime() + INTERVAL
-			self:SetValue(0)
+			local curr = UnitPower("player")
+			local max = UnitPowerMax("player")
+			if curr >= max then
+				expirationTime = ts + INTERVAL
+			end
+
 			return
 		end
 

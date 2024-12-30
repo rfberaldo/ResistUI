@@ -11,7 +11,7 @@
 There's also a chat settings at `chat-cache.txt`, copy and paste
 at `WTF/Account/<AccNumber>/<Realm>/<Character>` folder
 
-## What it changes/adds
+## Features
 
 - There is no configuration, it's fully opinionated
 - Minimalistic UI
@@ -21,10 +21,11 @@ at `WTF/Account/<AccNumber>/<Realm>/<Character>` folder
 - Elite frames
 - Status bar with FPS, latency, durability, current speed, and XP/h (hover for more details)
 - Blue shamans
-- Chat's short channel names, ability to copy urls
+- Chat's short channel names, ability to copy URLs
 - Announce on interrupt
 - Announce on important skills miss
-- Energy tick for rogues
+- Mana/Energy tick
+- Five Second Rule
 
 ## Example
 

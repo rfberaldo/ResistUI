@@ -1,5 +1,5 @@
 ## Interface: 11505
-## Version: 1.0.0
+## Version: @project-version@
 ## Title: ResistUI
 ## Notes: Resist's Custom UI
 ## Author: Resist
@@ -24,6 +24,7 @@ Modules/Buff.lua
 Modules/ActionBar.lua
 Modules/Button.lua
 Modules/EnergyTick.lua
+Modules/FiveSecondRule.lua
 
 Modules/Recolor/ActionBar.lua
 Modules/Recolor/UnitFrame.lua

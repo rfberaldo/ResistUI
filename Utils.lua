@@ -99,3 +99,20 @@ end
 function ResistUI:Clamp(value, min, max)
 	return math.min(max, math.max(min, value))
 end
+
+---@param spellId number any rank
+---@return boolean
+function ResistUI:PlayerHasBuff(spellId)
+	-- localized spell name (for non-english clients)
+	local spell = C_Spell.GetSpellInfo(spellId)
+
+	for i = 1, 40 do
+		local aura = C_UnitAuras.GetAuraDataByIndex("player", i, "HELPFUL")
+		if aura == nil then break end
+
+		if aura.name == spell.name then
+			return true
+		end
+	end
+	return false
+end

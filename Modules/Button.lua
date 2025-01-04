@@ -45,8 +45,7 @@ function module:OnLoad()
 
 		local macro = frame.Name
 		if macro then
-			macro:SetFont(ResistUI.font, ResistUI.fontSize - 1, "OUTLINE")
-			macro:Hide()
+			macro:SetFont(ResistUI.font, ResistUI.fontSize - 2, "OUTLINE")
 		end
 
 		local count = frame.Count

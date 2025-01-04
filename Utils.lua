@@ -69,23 +69,26 @@ end
 
 ---@param secs number
 function ResistUI:FormatTime(secs)
+	local NINETY_MINUTES = 5400 -- const
+	local ONE_DAY = 86400      -- const
+
 	if ResistUI:IsInf(secs) then
 		return "..."
 	end
 
-	if secs > 86400 then
-		return string.format("%dd", ceil(secs / 86400))
+	if secs > ONE_DAY then
+		return format("%dd", ceil(secs / 86400))
 	end
 
-	if secs > 3600 then
-		return string.format("%dh", ceil(secs / 3600))
+	if secs > NINETY_MINUTES then
+		return format("%dh", ceil(secs / 3600))
 	end
 
 	if secs > 90 then
-		return string.format("%dm", ceil(secs / 60))
+		return format("%dm", ceil(secs / 60))
 	end
 
-	return string.format("%ds", secs)
+	return format("%ds", secs)
 end
 
 ---@param value number

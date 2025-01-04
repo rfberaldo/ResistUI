@@ -104,18 +104,26 @@ function ResistUI:Clamp(value, min, max)
 end
 
 ---@param spellId number any rank
----@return boolean
+---@return boolean hasBuff, number rank
 function ResistUI:PlayerHasBuff(spellId)
 	-- localized spell name (for non-english clients)
 	local spell = C_Spell.GetSpellInfo(spellId)
+
+	if spell == nil then
+		return false, 0
+	end
 
 	for i = 1, 40 do
 		local aura = C_UnitAuras.GetAuraDataByIndex("player", i, "HELPFUL")
 		if aura == nil then break end
 
 		if aura.name == spell.name then
-			return true
+			local subtext = GetSpellSubtext(aura.spellId)
+			-- rank from text
+			local rank = tonumber(string.match(subtext, "%d+")) or 1
+			return true, rank
 		end
 	end
-	return false
+
+	return false, 0
 end

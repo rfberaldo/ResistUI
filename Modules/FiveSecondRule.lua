@@ -9,18 +9,73 @@ function module:OnLoad()
 	local TICK_INTERVAL = 2 -- const
 	local FSR_INTERVAL = 5 -- const
 
-	local lastPower = UnitPower("player")
+	local lastMana = UnitPower("player")
 	local lastTick = 0
 	local duration = 0
 	local expirationTime = 0
 
 	---@return boolean
-	local function hasRegenBuff()
+	local function hasFastRegenBuff()
 		local isDrinking = ResistUI:PlayerHasBuff(430)
 		local hasInnervate = ResistUI:PlayerHasBuff(29166)
 		local hasEvocation = ResistUI:PlayerHasBuff(12051)
 
 		return isDrinking or hasInnervate or hasEvocation
+	end
+
+	local function regenFromBuff()
+		local MP5_TO_MP2 = 0.4 -- const
+
+		-- Greater BoW is MP5
+		local greaterBowRegen = {
+			[1] = 30 * MP5_TO_MP2,
+			[2] = 33 * MP5_TO_MP2,
+		}
+
+		-- BoW is MP5
+		local bowRegen = {
+			[1] = 10 * MP5_TO_MP2,
+			[2] = 15 * MP5_TO_MP2,
+			[3] = 20 * MP5_TO_MP2,
+			[4] = 25 * MP5_TO_MP2,
+			[5] = 30 * MP5_TO_MP2,
+			[6] = 33 * MP5_TO_MP2,
+		}
+
+		-- Mana Spring is MP2
+		local manaSpringRegen = {
+			[1] = 4,
+			[2] = 6,
+			[3] = 8,
+			[4] = 10,
+		}
+
+		-- Rend is MP5
+		local rendRegen = 10 * MP5_TO_MP2
+
+		local regen = 0
+
+		local hasGBow, gBowRank = ResistUI:PlayerHasBuff(25894)
+		if hasGBow then
+			regen = regen + greaterBowRegen[gBowRank]
+		end
+
+		local hasBow, bowRank = ResistUI:PlayerHasBuff(19742)
+		if hasBow then
+			regen = regen + bowRegen[bowRank]
+		end
+
+		local hasManaSpring, manaSpringRank = ResistUI:PlayerHasBuff(5677)
+		if hasManaSpring then
+			regen = regen + manaSpringRegen[manaSpringRank]
+		end
+
+		local rend = ResistUI:PlayerHasBuff(16609)
+		if rend then
+			regen = regen + rendRegen
+		end
+
+		return regen
 	end
 
 	---@param gained number
@@ -30,12 +85,13 @@ function module:OnLoad()
 		local baseMp1 = GetManaRegen()
 		local baseMp2 = baseMp1 * TICK_INTERVAL
 		local lowMp2 = baseMp2 - baseMp2 * MANA_REGEN_SENS
-		local highMp2 = baseMp2 + baseMp2 * MANA_REGEN_SENS
+		local highMp2 = baseMp2 + baseMp2 * MANA_REGEN_SENS + regenFromBuff()
+
 		if lowMp2 <= gained and gained <= highMp2 then
 			return true
 		end
 
-		if gained > highMp2 and hasRegenBuff() then
+		if gained > highMp2 and hasFastRegenBuff() then
 			return true
 		end
 
@@ -48,10 +104,9 @@ function module:OnLoad()
 
 		local ts = GetTime()
 		local curr = UnitPower("player")
-		-- local max = UnitPowerMax("player")
 
-		-- regenerating
-		if curr > lastPower and isValidTick(curr - lastPower) then
+		local isRegenerating = curr > lastMana
+		if isRegenerating and isValidTick(curr - lastMana) then
 			self:Show()
 			self.Spark:Show()
 			duration = TICK_INTERVAL
@@ -59,8 +114,8 @@ function module:OnLoad()
 			lastTick = ts
 		end
 
-		-- mana spent
-		if curr < lastPower then
+		local hasSpent = curr < lastMana
+		if hasSpent then
 			self:Show()
 			self.Spark:Show()
 			-- time until next tick aligned with 2s intervals
@@ -75,7 +130,7 @@ function module:OnLoad()
 			expirationTime = ts + duration
 		end
 
-		lastPower = curr
+		lastMana = curr
 	end
 
 	local function updateHandler(self)

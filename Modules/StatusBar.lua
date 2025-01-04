@@ -4,6 +4,7 @@ local module = ResistUI:NewModule()
 function module:OnLoad()
 	local _, class = UnitClass("player")
 	local classColor = RAID_CLASS_COLORS[class]
+	local defaultHex = "ffffff"
 
 	local function createTextAnchoredTo(relativeTo)
 		local text = UIParent:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -28,7 +29,8 @@ function module:OnLoad()
 	-- FPS
 	local function setupFps()
 		local function updateFps()
-			fpsText:SetText("|c00ffffff" .. floor(GetFramerate()) .. "|r fps")
+			local fps = floor(GetFramerate())
+			fpsText:SetText(format("|c00%s%d|r fps", defaultHex, fps))
 		end
 
 		C_Timer.NewTicker(1, updateFps)
@@ -39,8 +41,8 @@ function module:OnLoad()
 	local function setupLatency()
 		local function updateLatency()
 			local latency = select(4, GetNetStats())
-			local color = latency > 500 and "ff3232" or "ffffff"
-			latencyText:SetText("|c00" .. color .. latency .. "|r ms")
+			local hex = latency > 500 and "ff3232" or defaultHex
+			latencyText:SetText(format("|c00%s%d|r ms", hex, latency))
 		end
 
 		C_Timer.NewTicker(15, updateLatency)
@@ -61,7 +63,10 @@ function module:OnLoad()
 				end
 			end
 			if maximumSum == 0 then return end
-			durabilityText:SetText(string.format("|c00ffffff%d%%|r durability", currentSum / maximumSum * 100))
+
+			local durability = currentSum / maximumSum * 100
+			local hex = durability <= 25 and "ff3232" or defaultHex
+			durabilityText:SetText(format("|c00%s%d%%|r durability", hex, durability))
 		end
 
 		local fd = CreateFrame("Frame")
@@ -76,7 +81,7 @@ function module:OnLoad()
 
 		local function updateSpeed()
 			speed = GetUnitSpeed("player") / 7 * 100
-			speedText:SetText(string.format("|c00ffffff%d%%|r speed", speed))
+			speedText:SetText(format("|c00%s%d%%|r speed", defaultHex, speed))
 		end
 
 		C_Timer.NewTicker(0.15, updateSpeed)
@@ -118,27 +123,27 @@ function module:OnLoad()
 			levelIn = math.max(0, (xpMax - xp) / rate)
 			restedPercent = (GetXPExhaustion() or 0) / xpMax * 100
 
-			xpHourText:SetText(string.format("|c00ffffff%.1fk|r XP/h", xpPerHour / 1000))
+			xpHourText:SetText(format("|c00%s%.1fk|r XP/h", defaultHex, xpPerHour / 1000))
 		end
 
 		xpHourText:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
 			GameTooltip:ClearLines()
-			GameTooltip:AddLine("XP per hour: " .. string.format("|c00ffffff%.1fk|r", xpPerHour / 1000))
+			GameTooltip:AddLine("XP per hour: " .. format("|c00%s%.1fk|r", defaultHex, xpPerHour / 1000))
 
 			if xpGainedTotal > 0 then
-				GameTooltip:AddLine("Total exp. gained: " .. string.format("|c00ffffff%d|r", xpGainedTotal))
+				GameTooltip:AddLine("Total exp. gained: " .. format("|c00%s%d|r", defaultHex, xpGainedTotal))
 			end
 
 			if restedPercent >= 1 then
-				GameTooltip:AddLine("Rested: " .. string.format("|c00ffffff%d%%|r", restedPercent))
+				GameTooltip:AddLine("Rested: " .. format("|c00%s%d%%|r", defaultHex, restedPercent))
 			end
 
 			if not ResistUI:IsInf(levelIn) then
-				GameTooltip:AddLine("Leveling in: " .. string.format("|c00ffffff%s|r", ResistUI:FormatTime(levelIn)))
+				GameTooltip:AddLine("Leveling in: " .. format("|c00%s%s|r", defaultHex, ResistUI:FormatTime(levelIn)))
 			end
 
-			GameTooltip:AddLine("Elapsed: " .. string.format("|c00ffffff%s|r", ResistUI:FormatTime(elapsed)))
+			GameTooltip:AddLine("Elapsed: " .. format("|c00%s%s|r", defaultHex, ResistUI:FormatTime(elapsed)))
 			GameTooltip:AddLine("(Click to reset session)", 0.6, 0.6, 0.6)
 			GameTooltip:Show()
 		end)

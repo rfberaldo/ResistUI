@@ -8,6 +8,7 @@ function module:OnLoad()
 
 	local TICK_INTERVAL = 2 -- const
 	local FSR_INTERVAL = 5 -- const
+	local MP5_TO_MP2 = 0.4 -- const
 
 	local lastMana = UnitPower("player")
 	local lastTick = 0
@@ -23,17 +24,27 @@ function module:OnLoad()
 		return isDrinking or hasInnervate or hasEvocation
 	end
 
-	local function regenFromBuff()
-		local MP5_TO_MP2 = 0.4 -- const
-
-		-- Greater BoW is MP5
-		local greaterBowRegen = {
+	-- Greater Blessing of Wisdom - does not take into account Improved BoW
+	local function greaterBowRegen()
+		local SPELL_ID = 25894
+		local regenByRank = {
 			[1] = 30 * MP5_TO_MP2,
 			[2] = 33 * MP5_TO_MP2,
 		}
 
-		-- BoW is MP5
-		local bowRegen = {
+		local found, rank = ResistUI:PlayerHasBuff(SPELL_ID)
+		if not found then return 0 end
+
+		local regen = regenByRank[rank]
+		if not regen then return 0 end
+
+		return regen
+	end
+
+	-- Blessing of Wisdom - does not take into account Improved BoW
+	local function bowRegen()
+		local SPELL_ID = 19742
+		local regenByRank = {
 			[1] = 10 * MP5_TO_MP2,
 			[2] = 15 * MP5_TO_MP2,
 			[3] = 20 * MP5_TO_MP2,
@@ -42,51 +53,61 @@ function module:OnLoad()
 			[6] = 33 * MP5_TO_MP2,
 		}
 
-		-- Mana Spring is MP2
-		local manaSpringRegen = {
+		local found, rank = ResistUI:PlayerHasBuff(SPELL_ID)
+		if not found then return 0 end
+
+		local regen = regenByRank[rank]
+		if not regen then return 0 end
+
+		return regen
+	end
+
+	-- Mana Spring Totem - does not take into account Restorative Totems
+	local function manaSpringRegen()
+		local SPELL_ID = 5677
+		local regenByRank = {
 			[1] = 4,
 			[2] = 6,
 			[3] = 8,
 			[4] = 10,
 		}
 
-		-- Rend is MP5
-		local rendRegen = 10 * MP5_TO_MP2
+		local found, rank = ResistUI:PlayerHasBuff(SPELL_ID)
+		if not found then return 0 end
 
-		local regen = 0
-
-		local hasGBow, gBowRank = ResistUI:PlayerHasBuff(25894)
-		if hasGBow then
-			regen = regen + greaterBowRegen[gBowRank]
-		end
-
-		local hasBow, bowRank = ResistUI:PlayerHasBuff(19742)
-		if hasBow then
-			regen = regen + bowRegen[bowRank]
-		end
-
-		local hasManaSpring, manaSpringRank = ResistUI:PlayerHasBuff(5677)
-		if hasManaSpring then
-			regen = regen + manaSpringRegen[manaSpringRank]
-		end
-
-		local rend = ResistUI:PlayerHasBuff(16609)
-		if rend then
-			regen = regen + rendRegen
-		end
+		local regen = regenByRank[rank]
+		if not regen then return 0 end
 
 		return regen
+	end
+
+	-- Warchief's Blessing (Rend)
+	local function rendRegen()
+		local SPELL_ID = 16609
+		local regen = 10 * MP5_TO_MP2
+
+		local found = ResistUI:PlayerHasBuff(SPELL_ID)
+		if found then
+			return regen
+		end
+
+		return 0
+	end
+
+	local function regenFromBuffs()
+		return greaterBowRegen() + bowRegen() + manaSpringRegen() + rendRegen()
 	end
 
 	---@param gained number
 	---@return boolean
 	local function isValidTick(gained)
-		local MANA_REGEN_SENS = 0.2 -- const
+		local REGEN_SENS = 0.2 -- const
 		local baseMp1 = GetManaRegen()
 		local baseMp2 = baseMp1 * TICK_INTERVAL
-		local lowMp2 = baseMp2 - baseMp2 * MANA_REGEN_SENS
-		local highMp2 = baseMp2 + baseMp2 * MANA_REGEN_SENS + regenFromBuff()
+		local lowMp2 = baseMp2 - baseMp2 * REGEN_SENS
+		local highMp2 = baseMp2 + baseMp2 * REGEN_SENS + regenFromBuffs()
 
+		-- having a high value avoids triggering on mana pots or Life Tap
 		if lowMp2 <= gained and gained <= highMp2 then
 			return true
 		end
@@ -105,8 +126,10 @@ function module:OnLoad()
 		local ts = GetTime()
 		local curr = UnitPower("player")
 
-		local isRegenerating = curr > lastMana
-		if isRegenerating and isValidTick(curr - lastMana) then
+		if curr == lastMana then return end
+
+		local hasGainedMana = curr > lastMana
+		if hasGainedMana and isValidTick(curr - lastMana) then
 			self:Show()
 			self.Spark:Show()
 			duration = TICK_INTERVAL
@@ -114,8 +137,8 @@ function module:OnLoad()
 			lastTick = ts
 		end
 
-		local hasSpent = curr < lastMana
-		if hasSpent then
+		local hasSpentMana = curr < lastMana
+		if hasSpentMana then
 			self:Show()
 			self.Spark:Show()
 			-- time until next tick aligned with 2s intervals

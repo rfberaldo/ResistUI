@@ -119,7 +119,11 @@ function ResistUI:PlayerHasBuff(spellId)
 
 		if aura.name == spell.name then
 			local subtext = GetSpellSubtext(aura.spellId)
-			-- rank from text
+			if not subtext then
+				return true, 1
+			end
+
+			-- rank from text, did not find an API to get it
 			local rank = tonumber(string.match(subtext, "%d+")) or 1
 			return true, rank
 		end

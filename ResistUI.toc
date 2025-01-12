@@ -10,6 +10,7 @@ Utils.lua
 Modules/Debug.lua
 Modules/ShamanBlue.lua
 Modules/StatusBar.lua
+Modules/AutoTrack.lua
 Modules/AnnounceInterrupt.lua
 Modules/AnnounceMiss.lua
 Modules/CastingBar.lua

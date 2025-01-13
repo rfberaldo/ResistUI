@@ -3,37 +3,41 @@
 ## Title: ResistUI
 ## Notes: Resist's Custom UI
 ## Author: Resist
+## SavedVariables: ResistUICfg
 
-Init.lua
-Utils.lua
+Core/Main.lua
+Core/UIFactory.lua
+Core/Utils.lua
 
-Modules/Debug.lua
-Modules/ShamanBlue.lua
-Modules/StatusBar.lua
-Modules/AutoTrack.lua
+Modules/ActionBar.lua
 Modules/AnnounceInterrupt.lua
 Modules/AnnounceMiss.lua
+Modules/AutoTrack.lua
+Modules/Buff.lua
+Modules/Button.lua
 Modules/CastingBar.lua
-Modules/TargetHealth.lua
-Modules/UnitFrame.lua
-Modules/UnitFrameHealthColor.lua
-Modules/UnitFrameBarTexture.lua
 Modules/ChatShortChannel.lua
 Modules/ChatUrl.lua
-Modules/Tooltip.lua
-Modules/Buff.lua
-Modules/ActionBar.lua
-Modules/Button.lua
 Modules/EnergyTick.lua
 Modules/FiveSecondRule.lua
+Modules/OptionsPanel.lua
+Modules/ShamanBlue.lua
+Modules/SlashCmd.lua
+Modules/StatusBar.lua
+Modules/TargetHealth.lua
+Modules/Tooltip.lua
+Modules/UnitFrame.lua
+Modules/UnitFrameBarTexture.lua
+Modules/UnitFrameHealthColor.lua
+Modules/UnitFramesClassPortrait.lua
 
 Modules/Recolor/ActionBar.lua
-Modules/Recolor/UnitFrame.lua
-Modules/Recolor/Minimap.lua
-Modules/Recolor/CastingBar.lua
-Modules/Recolor/Chat.lua
-Modules/Recolor/PopUp.lua
 Modules/Recolor/AddonList.lua
-Modules/Recolor/WorldMap.lua
-Modules/Recolor/Talent.lua
+Modules/Recolor/CastingBar.lua
 Modules/Recolor/Character.lua
+Modules/Recolor/Chat.lua
+Modules/Recolor/Minimap.lua
+Modules/Recolor/PopUp.lua
+Modules/Recolor/Talent.lua
+Modules/Recolor/UnitFrame.lua
+Modules/Recolor/WorldMap.lua

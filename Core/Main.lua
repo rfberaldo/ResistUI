@@ -10,7 +10,17 @@ ResistUI.frameColor = {
 }
 
 ResistUI.modules = {}
-ResistUI.lateModules = {}
+ResistUI.cfgDefaults = {
+	announceInterrupt = true,
+	announceMiss = true,
+	autoTrack = true,
+	classPortraits = false,
+	customActionBars = true,
+	shamanBlue = true,
+	showAllBags = false,
+	energyTick = true,
+	fiveSecondRule = true,
+}
 
 function ResistUI:NewModule(name)
 	local module = {}
@@ -22,6 +32,9 @@ end
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGIN")
 f:SetScript("OnEvent", function()
+	ResistUICfg = ResistUICfg or {}
+	ResistUICfg = ResistUI:MergeTable(ResistUICfg, ResistUI.cfgDefaults)
+
 	for _, module in pairs(ResistUI.modules) do
 		module:OnLoad()
 	end

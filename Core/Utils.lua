@@ -131,3 +131,17 @@ function ResistUI:PlayerHasBuff(spellId)
 
 	return false, 0
 end
+
+--- Merge keys in t2 into t1 (t1 has priority)
+---@param t1 table
+---@param t2 table
+---@return table
+function ResistUI:MergeTable(t1, t2)
+	local copy = CopyTable(t1)
+	for k, v in pairs(t2) do
+		if copy[k] == nil then
+			copy[k] = v
+		end
+	end
+	return copy
+end

@@ -2,6 +2,8 @@ local _, ResistUI = ...
 
 local module = ResistUI:NewModule()
 function module:OnLoad()
+	if not ResistUICfg.energyTick then return end
+
 	local availbleClasses = {
 		["ROGUE"] = true,
 		["DRUID"] = true,

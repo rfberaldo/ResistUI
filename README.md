@@ -17,19 +17,19 @@ at `WTF/Account/<AccNumber>/<Realm>/<Character>` folder if you want it.
 
 ## Features
 
-- There is no configuration, it's fully opinionated
 - Minimalistic UI
 - Darkened frames, action bars, buffs, debuffs
 - Bigger health bar
 - Class-colored health bar
 - Elite frames
 - Status bar with FPS, latency, durability, current speed, and XP/h (hover for more details)
-- Blue shamans
+- Blue Shamans
 - Chat's short channel names, ability to copy URLs
 - Announce on interrupt
 - Announce on important skills miss
 - Mana/Energy tick
 - Five Second Rule
+- Auto track minerals/herbs
 
 ## Example
 

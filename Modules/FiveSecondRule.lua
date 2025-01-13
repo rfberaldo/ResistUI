@@ -2,6 +2,8 @@ local _, ResistUI = ...
 
 local module = ResistUI:NewModule()
 function module:OnLoad()
+	if not ResistUICfg.fiveSecondRule then return end
+
 	local _, class = UnitClass("player")
 	if class == "WARRIOR" then return end
 	if class == "ROGUE" then return end

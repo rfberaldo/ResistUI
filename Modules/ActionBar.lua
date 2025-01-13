@@ -1,9 +1,9 @@
 local _, ResistUI = ...
 
-local showAllBags = false
-
 local module = ResistUI:NewModule()
 function module:OnLoad()
+	if not ResistUICfg.customActionBars then return end
+
 	local dominos = C_AddOns.IsAddOnLoaded("Dominos")
 	local bartender = C_AddOns.IsAddOnLoaded("Bartender4")
 
@@ -44,7 +44,7 @@ function module:OnLoad()
 	end
 
 	local function setupMicroMenuAndBags()
-		if showAllBags then
+		if ResistUICfg.showAllBags then
 			CharacterMicroButton:ClearAllPoints()
 			CharacterMicroButton:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -184, 2)
 			MainMenuBarBackpackButton:ClearAllPoints()

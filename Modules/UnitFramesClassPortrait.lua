@@ -20,7 +20,7 @@ function module:OnLoad()
 
 		self.mask = self:CreateMaskTexture()
 		self.mask:SetAllPoints(self.portrait)
-		self.mask:SetTexture("Interface/CHARACTERFRAME/TempPortraitAlphaMask")
+		self.mask:SetTexture("Interface\\CHARACTERFRAME\\TempPortraitAlphaMask")
 		self.portrait:AddMaskTexture(self.mask)
 	end
 

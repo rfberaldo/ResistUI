@@ -2,6 +2,8 @@ local _, ResistUI = ...
 
 local module = ResistUI:NewModule()
 function module:OnLoad()
+	if not ResistUICfg.announceMiss then return end
+
 	local spellIds = {
 		-- Rogue
 		1766, -- Kick
@@ -69,6 +71,16 @@ function module:OnLoad()
 		if (not spellNames[spellName]) then return end
 
 		local msg = spellName .. " Miss!"
-		SendChatMessage(msg, IsInRaid(flags) and "RAID" or "PARTY")
+
+		local channel
+		if IsInInstance() then
+			channel = "SAY"
+		elseif IsInRaid(flags) then
+			channel = "RAID"
+		else
+			channel = "PARTY"
+		end
+
+		SendChatMessage(msg, channel)
 	end)
 end

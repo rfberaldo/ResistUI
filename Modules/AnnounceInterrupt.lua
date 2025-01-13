@@ -2,6 +2,8 @@ local _, ResistUI = ...
 
 local module = ResistUI:NewModule()
 function module:OnLoad()
+	if not ResistUICfg.announceInterrupt then return end
+
 	local f = CreateFrame("Frame")
 	f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	f:SetScript("OnEvent", function()
@@ -19,6 +21,16 @@ function module:OnLoad()
 		if (sourceGUID ~= UnitGUID("player")) then return end
 
 		local msg = "Interrupted " .. (spellName or destName)
-		SendChatMessage(msg, IsInRaid(flags) and "RAID" or "PARTY")
+
+		local channel
+		if IsInInstance() then
+			channel = "SAY"
+		elseif IsInRaid(flags) then
+			channel = "RAID"
+		else
+			channel = "PARTY"
+		end
+
+		SendChatMessage(msg, channel)
 	end)
 end
